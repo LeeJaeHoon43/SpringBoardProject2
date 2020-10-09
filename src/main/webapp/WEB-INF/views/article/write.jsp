@@ -60,7 +60,7 @@
 	                            </div>
 	                        </div>
 	                        <div class="box-footer">
-	                            <button type="button" class="btn btn-primary"><i class="fa fa-list"></i> 목록</button>
+	                            <button type="button" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
 	                            <div class="pull-right">
 	                                <button type="reset" class="btn btn-warning"><i class="fa fa-reply"></i> 초기화</button>
 	                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> 저장</button>
@@ -124,5 +124,12 @@
 		<div class="control-sidebar-bg"></div>
 	</div>
 	<%@ include file="../include/plugin_js.jsp"%>
+	<script type="text/javascript">
+	$(document).ready(function () {
+        $(".listBtn").on("click", function () {
+           self.location = "/article/list";
+        });
+    });
+	</script>
 </body>
 </html>

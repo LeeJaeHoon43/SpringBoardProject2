@@ -126,7 +126,7 @@
 		</aside>
 		<div class="control-sidebar-bg"></div>
 	</div>
-	<%@ include file="../include/plugin_js.jsp"%>
+	<%@ include file="../include/plugin_js.jsp"%>writeBtn
 	<script type="text/javascript">
 	 	var result = "${msg}";
 	    if (result == "regSuccess") {
@@ -136,6 +136,12 @@
 	    } else if (result == "delSuccess"){
 	        alert("게시글 삭제가 완료되었습니다.");
 	    }
+	    
+	    $(document).ready(function () {
+	        $("#writeBtn").on("click", function () {
+	           self.location = "/article/write";
+	        });
+	    });
 	</script>
 </body>
 </html>

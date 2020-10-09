@@ -135,7 +135,7 @@
 	           formObj.submit();
 	        });
 	        $(".listBtn").on("click", function () {
-	           self.location = "/article/list"
+	           self.location = "/article/list";
 	        });
 	    });
 	</script>
