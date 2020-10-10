@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ljh.mvcboard.article.domain.ArticleVO;
 import com.ljh.mvcboard.article.service.ArticleService;
+import com.ljh.mvcboard.commons.paging.Criteria;
 
 @Controller
 @RequestMapping("/article")
@@ -27,14 +28,14 @@ public class ArticleController {
 	// 등록 페이지 이동.
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String writeGET() {
-		logger.info("write GET");
-		return "/article/write";
+		logger.info("normal write GET");
+		return "article/normal/write";
 	}
 	
 	// 등록 처리.
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String writePOST(ArticleVO articleVO, RedirectAttributes rttr) throws Exception{
-		logger.info("write POST");
+		logger.info("normal write POST");
 		logger.info(articleVO.toString());
 		articleService.create(articleVO);
 		rttr.addFlashAttribute("msg", "regSuccess");
@@ -44,31 +45,31 @@ public class ArticleController {
 	// 목록 조회.
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) throws Exception{
-		logger.info("list");
+		logger.info("normal list");
 		model.addAttribute("articles", articleService.listAll());
-		return "/article/list";
+		return "article/normal/list";
 	}
 	
 	// 조회 페이지 이동.
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("articleNo") int articleNo, Model model) throws Exception{
-		logger.info("read");
+		logger.info("normal read");
 		model.addAttribute("article", articleService.read(articleNo));
-		return "/article/read";
+		return "/article/normal/read";
 	}
 	
 	// 수정 페이지 이동.
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modifyGET(@RequestParam("articleNo") int articleNo, Model model) throws Exception{
-		logger.info("modify GET");
+		logger.info("normal modify GET");
 		model.addAttribute("article", articleService.read(articleNo));
-		return "/article/modify";
+		return "article/normal/modify";
 	}
 	
 	// 수정 처리.
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String modifyPOST(ArticleVO articleVO, RedirectAttributes rttr) throws Exception{
-		logger.info("modify POST");
+		logger.info("normal modify POST");
 		articleService.update(articleVO);
 		rttr.addFlashAttribute("msg", "modSuccess");
 		return "redirect:/article/list";
@@ -77,9 +78,17 @@ public class ArticleController {
 	// 삭제 처리.
 	@RequestMapping(value = "/remove", method = RequestMethod.POST)
 	public String remove(@RequestParam("articleNo") int articleNo, RedirectAttributes rttr) throws Exception{
-		logger.info("remove");
+		logger.info("normal remove");
 		articleService.delete(articleNo);
 		rttr.addFlashAttribute("msg", "delSuccess");
 		return "redirect:/article/list";
+	}
+	
+	// 페이징된 목록 요청.
+	@RequestMapping(value = "/listCriteria", method = RequestMethod.GET)
+	public String listCriteria(Model model, Criteria criteria) throws Exception{
+		logger.info("normal listCriteria");
+		model.addAttribute("articles", articleService.listCriteria(criteria));
+		return "article/normal/list_criteria";
 	}
 }

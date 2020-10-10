@@ -21,22 +21,20 @@
 <!-- Google Font -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<%@ include file="../include/head.jsp"%>
+<%@ include file="../../include/head.jsp"%>
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
 	<div class="wrapper">
-		<%@ include file="../include/main_header.jsp"%>
-		<%@ include file="../include/left_column.jsp"%>
+		<%@ include file="../../include/main_header.jsp"%>
+		<%@ include file="../../include/left_column.jsp"%>
 		<!-- main content -->
 		<div class="content-wrapper">
 			<section class="content-header">
-				<h1>
-					Page Header<small>Optional description</small>
-				</h1>
-				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-					<li class="active">Here</li>
-				</ol>
-			</section>
+	            <h1>게시판<small>입력페이지</small></h1>
+	            <ol class="breadcrumb">
+	                <li><i class="fa fa-edit"></i> article</li>
+	                <li class="active"><a href="${path}/article/write"> write</a></li>
+	            </ol>
+	        </section>
 			<section class="content container-fluid">
 				<div class="col-lg-12">
 	                <form role="form" id="writeForm" method="post" action="${path}/article/write">
@@ -72,7 +70,7 @@
 			
 			</section>
 		</div>
-		<%@ include file="../include/main_footer.jsp"%>
+		<%@ include file="../../include/main_footer.jsp"%>
 		<!-- control sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">
 			<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
@@ -123,13 +121,13 @@
 		</aside>
 		<div class="control-sidebar-bg"></div>
 	</div>
-	<%@ include file="../include/plugin_js.jsp"%>
+	<%@ include file="../../include/plugin_js.jsp"%>
 	<script type="text/javascript">
-	$(document).ready(function () {
-        $(".listBtn").on("click", function () {
-           self.location = "/article/list";
-        });
-    });
+		$(document).ready(function () {
+	        $(".listBtn").on("click", function () {
+	           self.location = "/article/list";
+	        });
+	    });
 	</script>
 </body>
 </html>

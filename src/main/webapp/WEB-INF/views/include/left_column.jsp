@@ -10,7 +10,7 @@
 					alt="User Image">
 			</div>
 			<div class="pull-left info">
-				<p>Alexander Pierce</p>
+				<p>LEE JAE HOON</p>
 				<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 			</div>
 		</div>
@@ -30,8 +30,52 @@
 		<!-- Sidebar Menu -->
 		<ul class="sidebar-menu" data-widget="tree">
 			<li class="header">메뉴</li>
-			<li class="active"><a href="${path}/article/write"><i class="fa fa-link"></i><span>게시글 작성</span></a></li>
-			<li><a href="${path}/article/list"><i class="fa fa-link"></i><span>게시글 목록</span></a></li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-folder"></i> <span>예제</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="${path}/reply/test"><i class="fa fa-comment"></i> 댓글 </a></li>
+                    <li><a href="${path}/file/form/uploadPage"><i class="fa fa-file"></i> 파일 업로드(Form)</a></li>
+                    <li><a href="${path}/file/ajax/uploadPage"><i class="fa fa-file"></i> 파일 업로드(Ajax Drop)</a></li>
+                    <li><a href="${path}/interceptor/doA"><i class="fa fa-mail-forward"></i> 인터셉터</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-edit"></i> <span>게시판(기본)</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="${path}/article/write"><i class="fa fa-pencil"></i> 게시글 쓰기</a></li>
+                    <li><a href="${path}/article/list"><i class="fa fa-list"></i> 게시글 목록</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-edit"></i> <span>게시판(페이징)</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="${path}/article/paging/write"><i class="fa fa-pencil"></i> 게시글 쓰기</a></li>
+                    <li><a href="${path}/article/paging/list"><i class="fa fa-list"></i> 게시글 목록</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-edit"></i> <span>게시판(페이징+검색)</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="${path}/article/paging/search/write"><i class="fa fa-pencil"></i> 게시글 쓰기</a></li>
+                    <li><a href="${path}/article/paging/search/list"><i class="fa fa-list"></i> 게시글 목록</a></li>
+                </ul>
+            </li>
 		</ul>
 	</section>
 </aside>

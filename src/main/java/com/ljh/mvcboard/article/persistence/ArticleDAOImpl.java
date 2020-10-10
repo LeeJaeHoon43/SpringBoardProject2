@@ -1,10 +1,12 @@
-package com.ljh.mvcboard.article.persistance;
+package com.ljh.mvcboard.article.persistence;
 
 import java.util.List;
 import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import com.ljh.mvcboard.article.domain.ArticleVO;
+import com.ljh.mvcboard.commons.paging.Criteria;
+import com.ljh.mvcboard.commons.paging.SearchCriteria;
 
 @Repository
 public class ArticleDAOImpl implements ArticleDAO{
@@ -41,5 +43,34 @@ public class ArticleDAOImpl implements ArticleDAO{
 	@Override
 	public List<ArticleVO> listAll() throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".listAll");
+	}
+
+	@Override
+	public List<ArticleVO> listPaging(int page) throws Exception {
+		if (page <= 0) {
+			page = 1;
+		}
+		page = (page - 1) * 10;
+		return sqlSession.selectList(NAMESPACE + ".listPaging", page);
+	}
+
+	@Override
+	public List<ArticleVO> listCriteria(Criteria criteria) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listCriteria", criteria);
+	}
+
+	@Override
+	public int countArticles(Criteria criteria) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".countArticles", criteria);
+	}
+
+	@Override
+	public List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listSearch", searchCriteria);
+	}
+
+	@Override
+	public int countSearchedArticles(SearchCriteria searchCriteria) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".countSearchedArticles", searchCriteria);
 	}
 }

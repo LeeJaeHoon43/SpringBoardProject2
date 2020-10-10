@@ -4,7 +4,9 @@ import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import com.ljh.mvcboard.article.domain.ArticleVO;
-import com.ljh.mvcboard.article.persistance.ArticleDAO;
+import com.ljh.mvcboard.article.persistence.ArticleDAO;
+import com.ljh.mvcboard.commons.paging.Criteria;
+import com.ljh.mvcboard.commons.paging.SearchCriteria;
 
 @Service
 public class ArticleServiceImpl implements ArticleService{
@@ -39,5 +41,25 @@ public class ArticleServiceImpl implements ArticleService{
 	@Override
 	public List<ArticleVO> listAll() throws Exception {
 		return articleDAO.listAll();
+	}
+
+	@Override
+	public List<ArticleVO> listCriteria(Criteria criteria) throws Exception {
+		return articleDAO.listCriteria(criteria);
+	}
+
+	@Override
+	public int countArticles(Criteria criteria) throws Exception {
+		return articleDAO.countArticles(criteria);
+	}
+
+	@Override
+	public List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception {
+		return articleDAO.listSearch(searchCriteria);
+	}
+
+	@Override
+	public int countSearchedArticles(SearchCriteria searchCriteria) throws Exception {
+		return articleDAO.countSearchedArticles(searchCriteria);
 	}
 }
