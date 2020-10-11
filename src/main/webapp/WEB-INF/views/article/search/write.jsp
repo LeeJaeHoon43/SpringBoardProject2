@@ -29,7 +29,7 @@
 		<!-- main content -->
 		<div class="content-wrapper">
 			<section class="content-header">
-	            <h1>게시판<small>입력페이지(페이징)</small></h1>
+	            <h1>게시판<small>입력페이지(페이징 + 검색)</small></h1>
 	            <ol class="breadcrumb">
 	                <li><i class="fa fa-edit"></i> article</li>
 	                <li class="active"><a href="${path}/article/paging/write"> write</a></li>
@@ -125,7 +125,7 @@
 	<script type="text/javascript">
 	$(document).ready(function () {
         $(".listBtn").on("click", function () {
-           self.location = "/article/paging/list";
+           self.location = "/article/paging/search/list";
         });
     });
 	</script>

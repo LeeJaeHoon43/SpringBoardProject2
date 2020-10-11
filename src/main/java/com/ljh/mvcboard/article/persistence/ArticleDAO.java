@@ -16,4 +16,6 @@ public interface ArticleDAO {
 	public int countArticles(Criteria criteria) throws Exception; // 전체 게시글 갯수 구하기.
 	public List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception; // 검색된 목록.
 	public int countSearchedArticles(SearchCriteria searchCriteria) throws Exception; // 검색된 게시글의 갯수.
+	public void updateReplyCnt(Integer articleNo, int amount) throws Exception; // 댓글 갯수 갱신.
+	public void updateViewCnt(Integer articleNo) throws Exception; // 조회수 증가.
 }

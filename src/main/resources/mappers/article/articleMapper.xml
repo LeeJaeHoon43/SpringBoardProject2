@@ -4,11 +4,11 @@
 
 <mapper namespace="com.ljh.mvcboard.mappers.article.ArticleMapper">
 	<insert id="create">
-		INSERT INTO tbl_article(article_no, title, content, writer, regdate, viewcnt) VALUES(#{articleNo}, #{title}, #{content}, #{writer}, now(), #{viewCnt})
+		INSERT INTO tbl_article(article_no, title, content, writer, reg_date, view_cnt) VALUES(#{articleNo}, #{title}, #{content}, #{writer}, now(), #{viewCnt})
 	</insert>
 	
 	<select id="read" resultMap="ArticleResultMap">
-		SELECT article_no, title, content, writer, regdate, viewcnt FROM tbl_article WHERE article_no = #{articleNo}
+		SELECT article_no, title, content, writer, reg_date, view_cnt FROM tbl_article WHERE article_no = #{articleNo}
 	</select>
 	
 	<update id="update">
@@ -21,19 +21,19 @@
 	
 	<select id="listAll" resultMap="ArticleResultMap">
 		<![CDATA[
-			SELECT article_no, title, content, writer, regdate, viewcnt FROM tbl_article WHERE article_no > 0 ORDER BY article_no DESC, regdate DESC
+			SELECT article_no, title, content, writer, reg_date, view_cnt FROM tbl_article WHERE article_no > 0 ORDER BY article_no DESC, reg_date DESC
 		]]>
 	</select>
 	
 	<select id="listPaging" resultMap="ArticleResultMap">
 		<![CDATA[
-        	SELECT article_no, title, content, writer, regdate, viewcnt FROM tbl_article WHERE article_no > 0 ORDER BY article_no DESC, regdate DESC LIMIT #{page}, 10
+        	SELECT article_no, title, content, writer, reg_date, view_cnt FROM tbl_article WHERE article_no > 0 ORDER BY article_no DESC, reg_date DESC LIMIT #{page}, 10
         ]]>
 	</select>
 	
 	<select id="listCriteria" resultMap="ArticleResultMap">
         <![CDATA[
-        	SELECT article_no, title, content, writer, regdate, viewcnt FROM tbl_article WHERE article_no > 0 ORDER BY article_no DESC, regdate DESC LIMIT #{pageStart}, #{perPageNum}
+        	SELECT article_no, title, content, writer, reg_date, view_cnt FROM tbl_article WHERE article_no > 0 ORDER BY article_no DESC, reg_date DESC LIMIT #{pageStart}, #{perPageNum}
         ]]>
     </select>
     
@@ -50,14 +50,15 @@
             , title
             , content
             , writer
-            , regdate
-            , viewcnt
+            , reg_date
+            , view_cnt
+            , reply_cnt
         FROM tbl_article
         WHERE article_no > 0
         ]]>
           <include refid="search"/>
         <![CDATA[
-        ORDER BY article_no DESC, regdate DESC
+        ORDER BY article_no DESC, reg_date DESC
         LIMIT #{pageStart}, #{perPageNum}
         ]]>
     </select>
@@ -103,14 +104,23 @@
             </if>
         </if>
     </sql>
+    
+    <update id="updateReplyCnt">
+    	UPDATE tbl_article SET reply_cnt = reply_cnt + #{amount} WHERE article_no = #{articleNo}
+    </update>
+    
+    <update id="updateViewCnt">
+    	UPDATE tbl_article SET view_cnt= view_cnt + 1 WHERE article_no = #{articleNo}
+    </update>
 		
 	<resultMap type="ArticleVO" id="ArticleResultMap">
 		<id property="articleNo" column="article_no"/>
 		<result property="title" column="title"/>
 		<result property="content" column="content"/>
 		<result property="writer" column="writer"/>
-		<result property="regDate" column="regdate"/>
-		<result property="viewCnt" column="viewcnt"/>
+		<result property="regDate" column="reg_date"/>
+		<result property="viewCnt" column="view_cnt"/>
+		<result property="replyCnt" column="reply_cnt"/>
 	</resultMap>
 	
 </mapper>

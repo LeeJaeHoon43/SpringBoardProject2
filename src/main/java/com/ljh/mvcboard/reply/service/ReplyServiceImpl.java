@@ -3,38 +3,48 @@ package com.ljh.mvcboard.reply.service;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.ljh.mvcboard.article.persistence.ArticleDAO;
 import com.ljh.mvcboard.commons.paging.Criteria;
 import com.ljh.mvcboard.reply.domain.ReplyVO;
 import com.ljh.mvcboard.reply.persistence.ReplyDAO;
 
 @Service
 public class ReplyServiceImpl implements ReplyService{
-	
+
 	private final ReplyDAO replyDAO;
 
+	private final ArticleDAO articleDAO;
+
 	@Inject
-	public ReplyServiceImpl(ReplyDAO replyDAO) {
+	public ReplyServiceImpl(ReplyDAO replyDAO, ArticleDAO articleDAO) {
 		this.replyDAO = replyDAO;
+		this.articleDAO = articleDAO;
 	}
-	
+
 	@Override
-	public List<ReplyVO> list(Integer articleNo) throws Exception {
+	public List<ReplyVO> getReplies(Integer articleNo) throws Exception {
 		return replyDAO.list(articleNo);
 	}
 
+	@Transactional
 	@Override
-	public void create(ReplyVO replyVO) throws Exception {
+	public void addReply(ReplyVO replyVO) throws Exception {
 		replyDAO.create(replyVO);
+		articleDAO.updateReplyCnt(replyVO.getArticleNo(), 1);
 	}
 
 	@Override
-	public void update(ReplyVO replyVO) throws Exception {
+	public void modifyReply(ReplyVO replyVO) throws Exception {
 		replyDAO.update(replyVO);
 	}
 
+	@Transactional
 	@Override
-	public void delete(Integer replyNo) throws Exception {
+	public void removeReply(Integer replyNo) throws Exception {
+		int articleNo = replyDAO.getArticleNo(replyNo);
 		replyDAO.delete(replyNo);
+		articleDAO.updateReplyCnt(articleNo, -1);
 	}
 
 	@Override

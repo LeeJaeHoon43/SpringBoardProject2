@@ -15,6 +15,41 @@
 	</properties>
 	<dependencies>
 	
+		<!-- imgscalr-lib -->
+		<dependency>
+		    <groupId>org.imgscalr</groupId>
+		    <artifactId>imgscalr-lib</artifactId>
+		    <version>4.2</version>
+		</dependency>
+		
+		<!-- commons-fileupload -->
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.4</version>
+		</dependency>
+	
+		<!-- aspectjtools -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjtools</artifactId>
+		    <version>${org.aspectj-version}</version>
+		</dependency>
+	
+		<!-- aspectjrt -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjrt</artifactId>
+		    <version>${org.aspectj-version}</version>
+		</dependency>
+		
+		<!-- spring-aop -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-aop</artifactId>
+		    <version>5.2.7.RELEASE</version>
+		</dependency>
+	
 		<!-- jackson-core -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
@@ -33,7 +68,7 @@
 		<dependency>
 		    <groupId>org.aspectj</groupId>
 		    <artifactId>aspectjweaver</artifactId>
-		    <version>1.9.5</version>
+		    <version>${org.aspectj-version}</version>
 		</dependency>
 	
 		<!-- log4jdbc-log4j2-jdbc4 -->

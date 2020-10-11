@@ -3,6 +3,9 @@ package com.ljh.mvcboard.article.service;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ljh.mvcboard.article.domain.ArticleVO;
 import com.ljh.mvcboard.article.persistence.ArticleDAO;
 import com.ljh.mvcboard.commons.paging.Criteria;
@@ -23,8 +26,10 @@ public class ArticleServiceImpl implements ArticleService{
 		articleDAO.create(articleVO);
 	}
 
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public ArticleVO read(Integer articleNo) throws Exception {
+		articleDAO.updateViewCnt(articleNo);
 		return articleDAO.read(articleNo);
 	}
 

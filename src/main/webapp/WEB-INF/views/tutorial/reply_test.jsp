@@ -118,12 +118,12 @@
 		<%@ include file="../include/main_footer.jsp"%>
 	</div>
 	<%@ include file="../include/plugin_js.jsp"%>
-	<script>
+	<script type="text/javascript">
 	    var replyPageNum = 1; // 목록 페이지 변수 선언, 1로 초기화(첫 번째 페이지)
 	    
 	    var articleNo = 1000; // 1000번째 게시글.
 	    getReplies(); // 댓글 목록 호출.
-	    // getRepliesPaging(replyPageNum);
+	    getRepliesPaging(replyPageNum);
 	    
 	    // 댓글 목록 출력 함수.
 	    function getReplies() {
