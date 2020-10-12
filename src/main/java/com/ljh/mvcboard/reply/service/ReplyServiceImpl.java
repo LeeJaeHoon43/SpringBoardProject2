@@ -27,11 +27,13 @@ public class ReplyServiceImpl implements ReplyService{
 		return replyDAO.list(articleNo);
 	}
 
-	@Transactional
+	// 댓글 등록.
+	@Transactional // 트랜잭션 처리.
 	@Override
 	public void addReply(ReplyVO replyVO) throws Exception {
 		replyDAO.create(replyVO);
-		articleDAO.updateReplyCnt(replyVO.getArticleNo(), 1);
+		System.out.println("getArticleNo : " + replyVO.getArticleNo());
+		articleDAO.updateReplyCnt(replyVO.getArticleNo(), 1); // 댓글 갯수 증가.
 	}
 
 	@Override
@@ -39,12 +41,13 @@ public class ReplyServiceImpl implements ReplyService{
 		replyDAO.update(replyVO);
 	}
 
-	@Transactional
+	// 댓글 삭제.
+	@Transactional // 트랜잭션 처리.
 	@Override
 	public void removeReply(Integer replyNo) throws Exception {
-		int articleNo = replyDAO.getArticleNo(replyNo);
+		int articleNo = replyDAO.getArticleNo(replyNo); // 댓글 게시물 번호 조회.
 		replyDAO.delete(replyNo);
-		articleDAO.updateReplyCnt(articleNo, -1);
+		articleDAO.updateReplyCnt(articleNo, -1); // 댓글 갯수 감소.
 	}
 
 	@Override

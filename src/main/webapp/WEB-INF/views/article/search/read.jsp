@@ -52,7 +52,10 @@
 							<h3 class="box-title">글제목 : ${article.title}</h3>
 						</div>
 						<div class="box-body" style="height: 700px">${article.content}</div>
-						
+						<%--업로드 파일 정보 영역--%>
+	                    <div class="box-footer uploadFiles">
+	                        <ul class="mailbox-attachments clearfix uploadedFileList"></ul>
+	                    </div>
 						<div class="box-footer">
 							<div class="user-block">
 								<img class="img-circle img-bordered-sm" src="${path}/dist/img/user1-128x128.jpg" alt="user image"> 
@@ -262,6 +265,19 @@
     	</div>
     	{{/each}}
 	</script>
+	<script id="fileTemplate" type="text/x-handlebars-template">
+    	<li data-src="{{fullName}}">
+        	<span class="mailbox-attachment-icon has-img">
+            	<img src="{{imgSrc}}" alt="Attachment">
+        	</span>
+        	<div class="mailbox-attachment-info">
+            	<a href="{{originalFileUrl}}" class="mailbox-attachment-name">
+                	<i class="fa fa-paperclip"></i> {{originalFileName}}
+            	</a>
+        	</div>
+    	</li>
+	</script>
+	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/dist/js/article_file_upload.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/dist/js/reply.js"></script>
 	<script type="text/javascript">		
@@ -269,6 +285,9 @@
 			
 			var articleNo = "${article.articleNo}";  // 현재 게시글 번호.
 	        var replyPageNum = 1; // 댓글 페이지 번호 초기화.
+	        
+	     	// 첨부파일 목록.
+	        getFiles(articleNo);
 	        
 	     	// 댓글 목록 함수 호출.
 	        getReplies("/replies/" + articleNo + "/" + replyPageNum);
@@ -458,14 +477,30 @@
 	            formObj.submit();
 	        });
 
+	        
+	        // 게시글 삭제 클릭 이벤트.
 	        $(".delBtn").on("click", function () {
-	        	var replyCnt = $(".replyDiv").length;
+	            var replyCnt = $(".replyDiv").length;
 	            if (replyCnt > 0) {
 	                alert("댓글이 달린 게시글은 삭제할수 없습니다.");
 	                return;
 	            }
-	           formObj.attr("action", "/article/paging/search/remove");
-	           formObj.submit();
+	            // 첨부 파일 명들을 배열에 저장.
+	            var arr = [];
+	            $(".uploadedFileList li").each(function () {
+	                arr.push($(this).attr("data-src"));
+	            });
+	            
+	            // 첨부 파일 삭제 요청.
+	            if (arr.length > 0) {
+	                $.post("/article/file/deleteAll", {files: arr}, function () {
+
+	                });
+	            }
+	            
+	            // 삭제 처리.
+	            formObj.attr("action", "/article/paging/search/remove");
+	            formObj.submit();
 	        });
 
 	        $(".listBtn").on("click", function () {

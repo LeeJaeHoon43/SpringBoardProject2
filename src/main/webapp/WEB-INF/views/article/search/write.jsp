@@ -20,6 +20,13 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/dist/css/skins/skin-blue.min.css">
 <!-- Google Font -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<style>
+    .fileDrop {
+        width: 100%;
+        height: 200px;
+        border: 2px dotted #0b58a2;
+    }
+</style>
 </head>
 <%@ include file="../../include/head.jsp"%>
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
@@ -37,7 +44,7 @@
 	        </section>
 			<section class="content container-fluid">
 				<div class="col-lg-12">
-	                <form role="form" id="writeForm" method="post" action="${path}/article/paging/write">
+	                <form role="form" id="writeForm" method="post" action="${path}/article/paging/search/write">
 	                    <div class="box box-primary">
 	                        <div class="box-header with-border">
 	                            <h3 class="box-title">게시글 작성</h3>
@@ -56,7 +63,19 @@
 	                                <label for="writer">작성자</label>
 	                                <input class="form-control" id="writer" name="writer">
 	                            </div>
+	                            <div class="form-group">
+	                                <div class="fileDrop">
+	                                    <br/>
+	                                    <br/>	
+	                                    <br/>
+	                                    <br/>
+	                                    <p class="text-center"><i class="fa fa-paperclip"></i> 첨부파일을 드래그해주세요.</p>
+	                                </div>
+	                            </div>
 	                        </div>
+	                        <div class="box-footer">
+                            	<ul class="mailbox-attachments clearfix uploadedFileList"></ul>
+                        	</div>
 	                        <div class="box-footer">
 	                            <button type="button" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
 	                            <div class="pull-right">
@@ -122,12 +141,47 @@
 		<div class="control-sidebar-bg"></div>
 	</div>
 	<%@ include file="../../include/plugin_js.jsp"%>
-	<script type="text/javascript">
-	$(document).ready(function () {
-        $(".listBtn").on("click", function () {
-           self.location = "/article/paging/search/list";
-        });
-    });
+	<script id="fileTemplate" type="text/x-handlebars-template">
+    <li>
+        <span class="mailbox-attachment-icon has-img">
+            <img src="{{imgSrc}}" alt="Attachment">
+        </span>
+        <div class="mailbox-attachment-info">
+            <a href="{{originalFileUrl}}" class="mailbox-attachment-name">
+                <i class="fa fa-paperclip"></i> {{originalFileName}}
+            </a>
+            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">
+                <i class="fa fa-fw fa-remove"></i>
+            </a>
+        </div>
+    </li>
+	</script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/dist/js/article_file_upload.js"></script>
+	<script type="text/javascript">		
+		$(document).ready(function () {
+			
+			// 게시글 저장 버튼 이벤트 처리.
+	        $("#writeForm").submit(function (event) {
+	            event.preventDefault();
+	            var that = $(this);
+	            filesSubmit(that);
+	        });
+			
+	     	// 파일 삭제 버튼 클릭 이벤트.
+	        $(document).on("click", ".delBtn", function (event) {
+	            event.preventDefault();
+	            var that = $(this);
+	            deleteFileWrtPage(that);
+	        });
+
+	        // 목록 버튼 클릭 이벤트 처리.
+	        $(".listBtn").on("click", function () {
+	            self.location = "/article/paging/search/list?page=${searchCriteria.page}"
+	                + "&perPageNum=${searchCriteria.perPageNum}"
+	                + "&searchType=${searchCriteria.searchType}"
+	                + "&keyword=${searchCriteria.keyword}";
+	        });
+	    });
 	</script>
 </body>
 </html>

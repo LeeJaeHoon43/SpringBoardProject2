@@ -20,6 +20,13 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/dist/css/skins/skin-blue.min.css">
 <!-- Google Font -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<style>
+    .fileDrop {
+        width: 100%;
+        height: 200px;
+        border: 2px dotted #0b58a2;
+    }
+</style>
 </head>
 <%@ include file="../../include/head.jsp"%>
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
@@ -61,6 +68,18 @@
 	                                <label for="writer">작성자</label>
 	                                <input class="form-control" id="writer" name="writer" value="${article.writer}" readonly>
 	                            </div>
+	                            <div class="form-group">
+	                                <div class="fileDrop">
+	                                    <br/>
+	                                    <br/>
+	                                    <br/>
+	                                    <br/>
+	                                    <p class="text-center"><i class="fa fa-paperclip"></i> 첨부파일을 드래그해주세요.</p>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="box-footer">
+	                            <ul class="mailbox-attachments clearfix uploadedFileList"></ul>
 	                        </div>
 	                        <div class="box-footer">
 	                            <button type="button" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
@@ -126,8 +145,47 @@
 		<div class="control-sidebar-bg"></div>
 	</div>
 	<%@ include file="../../include/plugin_js.jsp"%>
+	<script id="fileTemplate" type="text/x-handlebars-template">
+    <li>
+        <span class="mailbox-attachment-icon has-img">
+            <img src="{{imgSrc}}" alt="Attachment">
+        </span>
+        <div class="mailbox-attachment-info">
+            <a href="{{originalFileUrl}}" class="mailbox-attachment-name">
+                <i class="fa fa-paperclip"></i> {{originalFileName}}
+            </a>
+            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">
+                <i class="fa fa-fw fa-remove"></i>
+            </a>
+        </div>
+    </li>
+	</script>
+	<script type="text/javascript" src="/resources/dist/js/article_file_upload.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			
+			// 전역 변수 선언.
+	        var articleNo = "${article.articleNo}"; // 현재 게시글 번호.
+
+	        // 파일 삭제 버튼 클릭 이벤트.
+	        $(document).on("click", ".delBtn", function (event) {
+	            event.preventDefault();
+	            if (confirm("삭제하시겠습니까? 삭제된 파일은 복구할 수 없습니다.")) {
+	                var that = $(this);
+	                deleteFileModPage(that, articleNo);
+	            }
+	        });
+
+	        getFiles(articleNo);
+
+	        // 수정 처리시 파일 정보도 함께 처리.
+	        $("#modifyForm").submit(function (event) {
+	            event.preventDefault();
+	            var that = $(this);
+	            filesSubmit(that);
+	        });
+	        
+	        
 			var formObj = $("form[role='form']");
 	        console.log(formObj);
 	        $(".modBtn").on("click", function () {

@@ -5,25 +5,38 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.ljh.mvcboard.article.domain.ArticleVO;
 import com.ljh.mvcboard.article.persistence.ArticleDAO;
 import com.ljh.mvcboard.commons.paging.Criteria;
 import com.ljh.mvcboard.commons.paging.SearchCriteria;
+import com.ljh.mvcboard.upload.persistence.ArticleFileDAO;
 
 @Service
 public class ArticleServiceImpl implements ArticleService{
 	
 	private final ArticleDAO articleDAO;
+	private final ArticleFileDAO articleFileDAO;
 	
 	@Inject
-	public ArticleServiceImpl(ArticleDAO articleDAO) {
+	public ArticleServiceImpl(ArticleDAO articleDAO, ArticleFileDAO articleFileDAO) {
 		this.articleDAO = articleDAO;
+		this.articleFileDAO = articleFileDAO;
 	}
 
+	@Transactional
 	@Override
 	public void create(ArticleVO articleVO) throws Exception {
+		// 게시글 입력 처리.
 		articleDAO.create(articleVO);
+		String[] files = articleVO.getFiles();
+		if (files == null) {
+			return;
+		}
+		
+		// 게시글 첨부파일 입력 처리.
+		for (String fileName : files) {
+			articleFileDAO.addFile(fileName);
+		}
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED)
@@ -33,13 +46,26 @@ public class ArticleServiceImpl implements ArticleService{
 		return articleDAO.read(articleNo);
 	}
 
+	@Transactional
 	@Override
 	public void update(ArticleVO articleVO) throws Exception {
+		Integer articleNo = articleVO.getArticleNo();
+		String[] files = articleVO.getFiles();
 		articleDAO.update(articleVO);
+		articleFileDAO.deleteFiles(articleNo);
+		if (files == null) {
+			return;
+		}
+		for (String fileName : files) {
+			articleFileDAO.replaceFile(fileName, articleNo);
+		}
 	}
 
+	// 게시글 삭제 처리.
+	@Transactional
 	@Override
 	public void delete(Integer articleNo) throws Exception {
+		articleFileDAO.deleteFiles(articleNo);
 		articleDAO.delete(articleNo);
 	}
 

@@ -1,5 +1,7 @@
 package com.ljh.mvcboard.article.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import com.ljh.mvcboard.article.domain.ArticleVO;
 import com.ljh.mvcboard.article.service.ArticleService;
 import com.ljh.mvcboard.commons.paging.PageMaker;
 import com.ljh.mvcboard.commons.paging.SearchCriteria;
+import com.ljh.mvcboard.reply.service.ReplyService;
 
 @Controller
 @RequestMapping("/article/paging/search")
@@ -22,10 +25,12 @@ public class ArticlePagingSearchController {
 	private static final Logger logger = LoggerFactory.getLogger(ArticlePagingSearchController.class);
 
 	private final ArticleService articleService;
+	private final ReplyService replyService;
 
 	@Inject
-	public ArticlePagingSearchController(ArticleService articleService) {
+	public ArticlePagingSearchController(ArticleService articleService, ReplyService replyService) {
 		this.articleService = articleService;
+		this.replyService = replyService;
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
@@ -49,6 +54,14 @@ public class ArticlePagingSearchController {
 		pageMaker.setTotalCount(articleService.countSearchedArticles(searchCriteria));
 		//    	model.addAttribute("articles", articleService.listCriteria(searchCriteria));
 		model.addAttribute("articles", articleService.listSearch(searchCriteria));
+		List<ArticleVO> articles = articleService.listSearch(searchCriteria);
+		int articleNumber = 0;
+		for (ArticleVO article : articles) {
+			articleNumber = article.getArticleNo();
+		}
+		System.out.println("게시물 번호 : " + articleNumber);
+		System.out.println("댓글 갯수 : " + replyService.countReplies(articleNumber));
+		model.addAttribute("replyCnt", replyService.countReplies(articleNumber));
 		model.addAttribute("pageMaker", pageMaker);
 		return "article/search/list";	
 	}

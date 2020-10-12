@@ -45,14 +45,7 @@
     
     <select id="listSearch" resultMap="ArticleResultMap">
         <![CDATA[
-        SELECT
-            article_no
-            , title
-            , content
-            , writer
-            , reg_date
-            , view_cnt
-            , reply_cnt
+        SELECT article_no, title, content, writer, reg_date, view_cnt, reply_cnt
         FROM tbl_article
         WHERE article_no > 0
         ]]>

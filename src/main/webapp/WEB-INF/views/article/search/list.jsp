@@ -37,7 +37,7 @@
 				<div class="col-lg-12">
 	                <div class="box box-primary">
 	                    <div class="box-header with-border">
-	                        <h3 class="box-title">게시글 목록</h3>
+	                        <h3 class="box-title">게시글 목록(페이징 + 검색)</h3>
 	                    </div>
 	                    <div class="box-body">
 	                        <table class="table table-bordered">
@@ -47,18 +47,21 @@
 	                                <th>제목</th>
 	                                <th class="col-xs-2">작성자</th>
 	                                <th class="col-xs-2">작성일자</th>
+	                                <th class="col-xs-1">파일</th>
 	                                <th class="col-xs-1">조회</th>
 	                            </tr>
 	                            <c:forEach items="${articles}" var="article">
 	                            <tr>
 	                                <td>${article.articleNo}</td>
 	                                <td>
-	                                	<a href="${path}/article/paging/search/read${pageMaker.makeSearch(pageMaker.criteria.page)}&articleNo=${article.articleNo}">${article.title}
+	                                	<a href="${path}/article/paging/search/read${pageMaker.makeSearch(pageMaker.criteria.page)}&articleNo=${article.articleNo}">
+	                                		${article.title}
                                         </a>
-                                        <span class="badge bg-teal"><i class="fa fa-comment-o"></i> + ${article.replyCnt}</span>
+                                        <span class="badge bg-teal"><i class="fa fa-comment-o"></i> + ${replyCnt}</span>
                                     </td>
 	                                <td>${article.writer}</td>
 	                                <td><fmt:formatDate value="${article.regDate}" type="date" pattern="yyyy-MM-dd a HH:mm"/></td>
+	                                <td><span class="badge bg-teal"><i class="fa fa-file"></i> ${article.fileCnt}</span></td>
 	                                <td><span class="badge bg-red">${article.viewCnt}</span></td>
 	                            </tr>
 	                            </c:forEach>
@@ -165,7 +168,7 @@
 		</aside>
 		<div class="control-sidebar-bg"></div>
 	</div>
-	<%@ include file="../../include/plugin_js.jsp"%>writeBtn
+	<%@ include file="../../include/plugin_js.jsp"%>
 	<script type="text/javascript">
 	    $(document).ready(function () {
 	    	var result = "${msg}";

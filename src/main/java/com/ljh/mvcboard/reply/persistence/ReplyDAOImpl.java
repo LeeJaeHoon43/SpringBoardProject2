@@ -42,20 +42,20 @@ private static final String NAMESPACE = "com.ljh.mvcboard.mappers.reply.ReplyMap
 	}
 
 	@Override
-	public List<ReplyVO> listPaging(Integer articlaNo, Criteria criteria) throws Exception {
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("articleNo", articlaNo);
-		paramMap.put("criteria", criteria);
-		return sqlSession.selectList(NAMESPACE + ".listPaging", paramMap);
-	}
+    public List<ReplyVO> listPaging(Integer articleNo, Criteria criteria) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("articleNo", articleNo);
+        paramMap.put("criteria", criteria);
+        return sqlSession.selectList(NAMESPACE + ".listPaging", paramMap);
+    }
 
-	@Override
-	public int countReplies(Integer articleNo) throws Exception {
-		return sqlSession.selectOne(NAMESPACE + ".countReplies", articleNo);
-	}
+    @Override
+    public int countReplies(Integer articleNo) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".countReplies", articleNo);
+    }
 
-	@Override
-	public int getArticleNo(Integer replyNo) throws Exception {
-		return sqlSession.selectOne(NAMESPACE + ".getArticleNo", replyNo);
-	}
+    @Override
+    public int getArticleNo(Integer replyNo) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".getArticleNo", replyNo);
+    }
 }
