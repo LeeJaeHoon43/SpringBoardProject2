@@ -16,11 +16,10 @@
             </c:if>
             <c:if test="${not empty login}">
                 <div class="pull-left image">
-                    <img src="/${login.userImg}" class="img-circle" alt="User Image">
+                    <img src="${path}/${login.userImg}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>${login.userName}</p>
-                        <%-- Status --%>
                     <a href="#"><i class="fa fa-circle text-success"></i>ONLINE</a>
                 </div>
             </c:if>

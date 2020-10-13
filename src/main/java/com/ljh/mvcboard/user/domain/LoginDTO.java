@@ -2,9 +2,9 @@ package com.ljh.mvcboard.user.domain;
 
 public class LoginDTO {
 	private String userId;
-	private String userPw;
-	private boolean useCookie;
-	
+    private String userPw;
+    private boolean useCookie;
+    
 	public String getUserId() {
 		return userId;
 	}
@@ -26,6 +26,6 @@ public class LoginDTO {
 	
 	@Override
 	public String toString() {
-		return "LoginDTO [userId=" + userId + ", userPw=" + userPw + ", userCookie=" + useCookie + "]";
-	}
+		return "LoginDTO [userId=" + userId + ", userPw=" + userPw + ", useCookie=" + useCookie + "]";
+	}	
 }

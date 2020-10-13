@@ -9,17 +9,20 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
+	<!--AOP 설정을 통한 자동적인 Proxy 객체 생성을 위한 설정-->
 	<aop:aspectj-autoproxy/>
+	
 	<!--애너테이션 인식-->
     <mvc:annotation-driven/>
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!-- 정적자원 매핑 -->
 	<mvc:resources mapping="/resources/**" location="/resources/"/>
 	<mvc:resources mapping="/bower_components/**" location="/resources/bower_components/"/>
 	<mvc:resources mapping="/plugins/**" location="/resources/plugins/"/>
 	<mvc:resources mapping="/dist/**" location="/resources/dist/"/>
+	<mvc:resources mapping="/upload/user/**" location="/resources/upload/user/"/>
 
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<!--viewResolver 설정-->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
@@ -30,6 +33,7 @@
 		<beans:property name="maxUploadSize" value="10485760"></beans:property>
 	</beans:bean>
 	
+	 <!--인터셉터 설정-->
 	<beans:bean id="sampleInterceptor" class="com.ljh.mvcboard.tutorial.interceptor.SampleInterceptor"/>
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -53,11 +57,28 @@
             <mvc:mapping path="/article/paging/search/write"/>
             <mvc:mapping path="/article/paging/search/modify"/>
             <mvc:mapping path="/article/paging/search/remove"/>
-            <mvc:mapping path="/article/paging/search/write"/>
             <mvc:mapping path="/user/info"/>
             <beans:ref bean="authInterceptor"/>
         </mvc:interceptor>
 	</mvc:interceptors>
 	
+	<beans:bean id="rememberMeInterceptor" class="com.ljh.mvcboard.commons.interceptor.RememberMeInterceptor"/>
+	<mvc:interceptors>
+		<mvc:interceptor>
+            <mvc:mapping path="/**/"/>
+            <beans:ref bean="rememberMeInterceptor"/>
+        </mvc:interceptor>
+	</mvc:interceptors>
+	
+	<beans:bean id="loginAfterInterceptor" class="com.ljh.mvcboard.commons.interceptor.LoginAfterInterceptor"/>
+	<mvc:interceptors>
+		<mvc:interceptor>
+            <mvc:mapping path="/user/login"/>
+            <mvc:mapping path="/user/register"/>
+            <beans:ref bean="loginAfterInterceptor"/>
+        </mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!--base-package 속성 값에 해당하는 패키지 내부의 클래스들을 모두 조사-->
 	<context:component-scan base-package="com.ljh.mvcboard" />
 </beans:beans>
