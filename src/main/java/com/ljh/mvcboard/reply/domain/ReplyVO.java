@@ -2,6 +2,8 @@ package com.ljh.mvcboard.reply.domain;
 
 import java.util.Date;
 
+import com.ljh.mvcboard.user.domain.UserVO;
+
 public class ReplyVO {
 	private Integer replyNo;
 	private Integer articleNo;
@@ -9,6 +11,7 @@ public class ReplyVO {
 	private String replyWriter;
 	private Date regDate;
 	private Date updateDate;
+	private UserVO userVO; // 회원 필드 추가.
 	
 	public Integer getReplyNo() {
 		return replyNo;
@@ -46,9 +49,16 @@ public class ReplyVO {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
+	public UserVO getUserVO() {
+		return userVO;
+	}
+	public void setUserVO(UserVO userVO) {
+		this.userVO = userVO;
+	}
 	@Override
 	public String toString() {
 		return "ReplyVO [replyNo=" + replyNo + ", articleNo=" + articleNo + ", replyText=" + replyText
-				+ ", replyWriter=" + replyWriter + ", regDate=" + regDate + ", updateDate=" + updateDate + "]";
-	}
+				+ ", replyWriter=" + replyWriter + ", regDate=" + regDate + ", updateDate=" + updateDate + ", userVO="
+				+ userVO + "]";
+	}	
 }

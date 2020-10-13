@@ -5,7 +5,6 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!-- Main Header -->
 <header class="main-header">
-
     <%-- Logo --%>
     <a href="/" class="logo">
         <%-- mini logo for sidebar mini 50x50 pixels --%>
@@ -32,7 +31,7 @@
                                 <img src="/${login.userImg}" class="img-circle" alt="User Image">
                                 <p>${login.userName}
                                     <small>
-                                        가입일자 : <fmt:formatDate value="${login.userJoinDate}" pattern="yyyy-MM-dd"/>
+                                       	 가입일자 : <fmt:formatDate value="${login.userJoinDate}" pattern="yyyy-MM-dd"/>
                                     </small>
                                 </p>
                             </li>

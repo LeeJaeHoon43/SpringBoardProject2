@@ -14,6 +14,34 @@
 		<org.slf4j-version>1.7.30</org.slf4j-version>
 	</properties>
 	<dependencies>
+		
+		<!-- jbcrypt -->
+		<dependency>
+		    <groupId>org.mindrot</groupId>
+		    <artifactId>jbcrypt</artifactId>
+		    <version>0.4</version>
+		</dependency>
+		
+		<!-- handlebars-springmvc -->
+		<dependency>
+		    <groupId>com.github.jknack</groupId>
+		    <artifactId>handlebars-springmvc</artifactId>
+		    <version>4.2.0</version>
+		</dependency>
+			
+		<!-- handlebars-jackson2 -->
+		<dependency>
+		    <groupId>com.github.jknack</groupId>
+		    <artifactId>handlebars-jackson2</artifactId>
+		    <version>4.2.0</version>
+		</dependency>
+			
+		<!-- handlebars -->
+		<dependency>
+		    <groupId>com.github.jknack</groupId>
+		    <artifactId>handlebars</artifactId>
+		    <version>4.2.0</version>
+		</dependency>
 	
 		<!-- imgscalr-lib -->
 		<dependency>

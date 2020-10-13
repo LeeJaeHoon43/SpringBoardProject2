@@ -4,17 +4,28 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <aside class="main-sidebar">
 	<section class="sidebar">
-		<div class="user-panel">
-			<div class="pull-left image">
-				<img src="${path}/dist/img/user2-160x160.jpg" class="img-circle"
-					alt="User Image">
-			</div>
-			<div class="pull-left info">
-				<p>LEE JAE HOON</p>
-				<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-			</div>
-		</div>
-
+        <div class="user-panel">
+            <c:if test="${empty login}">
+                <div class="pull-left image">
+                    <img src="${path}/upload/user/default-user.png" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>Guest</p>
+                    <a href="#"><i class="fa fa-circle text-danger"></i>OFFLINE</a>
+                </div>
+            </c:if>
+            <c:if test="${not empty login}">
+                <div class="pull-left image">
+                    <img src="/${login.userImg}" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>${login.userName}</p>
+                        <%-- Status --%>
+                    <a href="#"><i class="fa fa-circle text-success"></i>ONLINE</a>
+                </div>
+            </c:if>
+        </div>
+		<br>
 		<form action="#" method="get" class="sidebar-form">
 			<div class="input-group">
 				<input type="text" name="q" class="form-control"
@@ -38,8 +49,6 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="${path}/reply/test"><i class="fa fa-comment"></i> 댓글 </a></li>
-                    <li><a href="${path}/file/form/uploadPage"><i class="fa fa-file"></i> 파일 업로드(Form)</a></li>
-                    <li><a href="${path}/file/ajax/uploadPage"><i class="fa fa-file"></i> 파일 업로드(Ajax Drop)</a></li>
                     <li><a href="${path}/interceptor/doA"><i class="fa fa-mail-forward"></i> 인터셉터</a></li>
                 </ul>
             </li>

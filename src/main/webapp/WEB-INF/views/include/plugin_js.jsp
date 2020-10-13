@@ -11,7 +11,7 @@
 <!-- AdminLTE App -->
 <script src="${path}/dist/js/adminlte.min.js"></script>
 <%--Handlebars--%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
 <%--fileUpload--%>
 <script src="${path}/bower_components/fileupload/js/jasny-bootstrap.min.js"></script>
 <%--lightbox--%>
