@@ -1,7 +1,5 @@
 package com.ljh.mvcboard.article.controller;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +14,6 @@ import com.ljh.mvcboard.article.domain.ArticleVO;
 import com.ljh.mvcboard.article.service.ArticleService;
 import com.ljh.mvcboard.commons.paging.PageMaker;
 import com.ljh.mvcboard.commons.paging.SearchCriteria;
-import com.ljh.mvcboard.reply.service.ReplyService;
 
 @Controller
 @RequestMapping("/article/paging/search")
@@ -25,12 +22,10 @@ public class ArticlePagingSearchController {
 	private static final Logger logger = LoggerFactory.getLogger(ArticlePagingSearchController.class);
 
 	private final ArticleService articleService;
-	private final ReplyService replyService;
 
 	@Inject
-	public ArticlePagingSearchController(ArticleService articleService, ReplyService replyService) {
+	public ArticlePagingSearchController(ArticleService articleService) {
 		this.articleService = articleService;
-		this.replyService = replyService;
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
@@ -45,26 +40,17 @@ public class ArticlePagingSearchController {
 		return "redirect:/article/paging/search/list";
 	}
 
+	// 목록 조회.
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria, Model model)throws Exception{
+    public String list(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria, Model model) throws Exception {
 		logger.info("search list");
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCriteria(searchCriteria);
-		//    	pageMaker.setTotalCount(articleService.countArticles(searchCriteria));
-		pageMaker.setTotalCount(articleService.countSearchedArticles(searchCriteria));
-		//    	model.addAttribute("articles", articleService.listCriteria(searchCriteria));
-		model.addAttribute("articles", articleService.listSearch(searchCriteria));
-		List<ArticleVO> articles = articleService.listSearch(searchCriteria);
-		int articleNumber = 0;
-		for (ArticleVO article : articles) {
-			articleNumber = article.getArticleNo();
-		}
-		System.out.println("게시물 번호 : " + articleNumber);
-		System.out.println("댓글 갯수 : " + replyService.countReplies(articleNumber));
-		model.addAttribute("replyCnt", replyService.countReplies(articleNumber));
-		model.addAttribute("pageMaker", pageMaker);
-		return "article/search/list";	
-	}
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(searchCriteria);
+        pageMaker.setTotalCount(articleService.countSearchedArticles(searchCriteria));
+        model.addAttribute("articles", articleService.listSearch(searchCriteria));
+        model.addAttribute("pageMaker", pageMaker);
+        return "article/search/list";
+    }
 
 	// 조회 페이지.
 	@RequestMapping(value = "/read", method = RequestMethod.GET)

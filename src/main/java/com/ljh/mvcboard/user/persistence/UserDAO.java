@@ -16,4 +16,5 @@ public interface UserDAO {
 		
 	// 세션키 검증.
 	public UserVO checkUserWithSessionKey(String value) throws Exception;
+	
 }

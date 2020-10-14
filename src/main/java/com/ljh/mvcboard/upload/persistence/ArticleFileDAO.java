@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ArticleFileDAO {
 	// 파일 추가.
-	public void addFile(String fullName) throws Exception;
+	public void addFile(String fileName) throws Exception;
 	// 파일 목록.
     public List<String> getArticleFiles(Integer articleNo) throws Exception;
     // 파일 삭제.

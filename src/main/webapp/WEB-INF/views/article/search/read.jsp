@@ -2,12 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ page session="false"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>게시판</title>
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -87,7 +85,7 @@
 				
 					<div class="box box-warning">
 	                    <div class="box-header with-border">
-	                        <a class="link-black text-lg"><i class="fa fa-pencil margin-r-5"></i> 댓글 쓰기</a>
+	                        <a class="link-black text-lg"><i class="fa fa-pencil margin-r-5"></i>댓글 쓰기</a>
 	                    </div>
 	                    <div class="box-body">
 	                        <c:if test="${not empty login}">
@@ -95,11 +93,11 @@
 	                                <div class="form-group">
 	                                    <textarea class="form-control" id="newReplyText" rows="3" placeholder="댓글내용..."style="resize: none"></textarea>
 	                                </div>
-	                                <div class="col-sm-2" hidden>
+	                                <div class="col-sm-2" hidden="">
 	                                    <input class="form-control" id="newReplyWriter" type="text" value="${login.userId}" readonly>
 	                                </div>
 	                                <button type="button" class="btn btn-default btn-block replyAddBtn">
-	                                    <i class="fa fa-save"></i> 댓글 저장
+	                                    <i class="fa fa-save"></i>댓글 저장
 	                                </button>
 	                            </form>
 	                        </c:if>
@@ -183,58 +181,6 @@
 			</section>
 		</div>
 		<%@ include file="../../include/main_footer.jsp"%>
-		<!-- control sidebar -->
-		<aside class="control-sidebar control-sidebar-dark">
-			<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-				<li class="active"><a href="#control-sidebar-home-tab"
-					data-toggle="tab"><i class="fa fa-home"></i></a></li>
-				<li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i
-						class="fa fa-gears"></i></a></li>
-			</ul>
-			<div class="tab-content">
-				<div class="tab-pane active" id="control-sidebar-home-tab">
-					<h3 class="control-sidebar-heading">Recent Activity</h3>
-					<ul class="control-sidebar-menu">
-						<li><a href="javascript:;"> <i
-								class="menu-icon fa fa-birthday-cake bg-red"></i>
-								<div class="menu-info">
-									<h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-									<p>Will be 23 on April 24th</p>
-								</div>
-						</a></li>
-					</ul>
-					<h3 class="control-sidebar-heading">Tasks Progress</h3>
-					<ul class="control-sidebar-menu">
-						<li><a href="javascript:;">
-								<h4 class="control-sidebar-subheading">
-									Custom Template Design <span class="pull-right-container">
-										<span class="label label-danger pull-right">70%</span>
-									</span>
-								</h4>
-								<div class="progress progress-xxs">
-									<div class="progress-bar progress-bar-danger"
-										style="width: 70%"></div>
-								</div>
-						</a></li>
-					</ul>
-				</div>
-				<div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab
-					Content</div>
-				<div class="tab-pane" id="control-sidebar-settings-tab">
-					<form method="post">
-						<h3 class="control-sidebar-heading">General Settings</h3>
-						<div class="form-group">
-							<label class="control-sidebar-subheading"> Report panel
-								usage <input type="checkbox" class="pull-right" checked>
-							</label>
-							<p>Some information about this general settings option</p>
-						</div>
-					</form>
-				</div>
-			</div>
-		</aside>
-		<div class="control-sidebar-bg"></div>
 	</div>
 	<%@ include file="../../include/plugin_js.jsp"%>	
     	<script id="replyTemplate" type="text/x-handlebars-template">
@@ -279,12 +225,10 @@
         	</div>
     	</li>
 	</script>
-	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/dist/js/article_file_upload.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/dist/js/reply.js"></script>
+	<script type="text/javascript" src="/resources/dist/js/article_file_upload.js"></script>
+	<script type="text/javascript" src="/resources/dist/js/reply.js"></script>
 	<script type="text/javascript">		
-		$(document).ready(function(){
-			
+		$(document).ready(function(){	
 			Handlebars.registerHelper("eqReplyWriter", function (replyWriter, block) {
 	            var accum = "";
 	            if (replyWriter === "${login.userId}") {
@@ -293,94 +237,16 @@
 	            return accum;
 	        });
 
-			var articleNo = "${article.articleNo}";  // 현재 게시글 번호.
+			var articleNo = "${article.articleNo}"; // 현재 게시글 번호.
 	        var replyPageNum = 1; // 댓글 페이지 번호 초기화.
-	        
-	     	// 첨부파일 목록.
-	        getFiles(articleNo);
 	        
 	     	// 댓글 목록 함수 호출.
 	        getReplies("/replies/" + articleNo + "/" + replyPageNum);
 	        
-	     	// 댓글 내용 : 줄바꿈, 공백처리.
-	        Handlebars.registerHelper("escape", function(replyText) {
-				var text = Handlebars.Utils.escapeExpression(replyText);
-				text = text.replace(/(\r\n|\n|\r)/gm, "<br/>");
-				text = text.replace(/( )/gm, "&nbsp;");
-				return new Handlebars.SafeString(text);
-			});
-			
-			// 댓글 등록일자 : 날짜 / 시간 2자리로 맞추기.
-			Handlebars.registerHelper("prettifyDate", function(timeValue) {
-				var dateObj = new Date(timeValue);
-				var year = dateObj.getFullYear();
-				var month = dateObj.getMonth() + 1;
-				var date = dateObj.getDate();
-				var hours = dateObj.getHours();
-				var minutes = dateObj.getMinutes();
-				// 2자리 숫자로 변환.
-				month < 10 ? month = '0' + month : month;
-				date < 10 ? date = '0' + date : date;
-				hours < 10 ? hours = '0' + hours : hours;
-				minutes < 10 ? minutes = '0' + minutes : minutes;
-				return year + "-" + month + "-" + date + " " + hours + ":" + minutes;
-			});
-	        
-	        // 댓글 목록 함수.
-	        function getReplies(repliesUri) {
-				$.getJSON(repliesUri, function(data) {
-					printReplyCount(data.pageMaker.totalCount);
-					printReplies(data.replies, $(".repliesDiv"), $("#replyTemplate"));
-					printReplyPaging(data.pageMaker, $(".pagination"));
-				});
-			}
-	        
-	        // 댓글 갯수 출력 함수.
-	        function printReplyCount(totalCount) {
-				var replyCount = $(".replyCount");
-				var collapsedBox = $(".collapsed-box");
-				
-				// 댓글이 없을 경우.
-				if (totalCount === 0) {
-					replyCount.html("댓글이 없습니다. 의견을 남겨주세요.");
-					collapsedBox.find(".btn-box-tool").remove();
-					return;
-				}
-				
-				// 댓글이 존재할 경우.
-				replyCount.html(" 댓글 목록 (" + totalCount + ")");
-				collapsedBox.find(".box-tools").html(
-					"<button type='button' class='btn btn-box-tool' data-widget='collapse'>"
-					+ "<i class='fa fa-plus'></i>"
-					+ "</button>"
-				);
-			}
-	        
-	        // 댓글 목록 출력 함수.
-	        function printReplies(replyArr, targetArea, templateObj) {
-				var replyTemplate = Handlebars.compile(templateObj.html());
-				var html = replyTemplate(replyArr);
-				$(".replyDiv").remove();
-				targetArea.html(html);
-			}
-	        
-	        // 댓글 페이징 출력 함수.
-	        function printReplyPaging(pageMaker, targetArea) {
-				var str = "";
-				if (pageMaker.prev) {	
-					str += "<li><a href='" + (pageMaker.startPage - 1) + "'>이전</a></li>";
-				}
-				for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
-					var strClass = pageMaker.criteria.page == i ? "class=active" : '';
-					str += "<li " + strClass + "><a href='" + i + "'>" + i + "</a></li>";
-				}
-				if (pageMaker.next) {
-					str += "<li><a href='" + (pageMaker.endPage + 1) + "'>다음</a></li>";
-				}
-				targetArea.html(str);
-			}
-			   
-	        // 댓글 페이지 번호 클릭 이벤트
+	     	// 첨부파일 목록.
+	        getFiles(articleNo);
+	     	
+	        // 댓글 페이지 번호 클릭 이벤트.
 	        $(".pagination").on("click", "li a", function (event) {
 	            event.preventDefault();
 	            replyPageNum = $(this).attr("href");
@@ -487,7 +353,6 @@
 	            formObj.submit();
 	        });
 
-	        
 	        // 게시글 삭제 클릭 이벤트.
 	        $(".delBtn").on("click", function () {
 	            var replyCnt = $(".replyDiv").length;

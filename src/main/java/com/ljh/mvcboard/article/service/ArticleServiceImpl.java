@@ -15,82 +15,77 @@ import com.ljh.mvcboard.upload.persistence.ArticleFileDAO;
 public class ArticleServiceImpl implements ArticleService{
 	
 	private final ArticleDAO articleDAO;
-	private final ArticleFileDAO articleFileDAO;
-	
-	@Inject
-	public ArticleServiceImpl(ArticleDAO articleDAO, ArticleFileDAO articleFileDAO) {
-		this.articleDAO = articleDAO;
-		this.articleFileDAO = articleFileDAO;
-	}
+    private final ArticleFileDAO articleFileDAO;
 
-	@Transactional
-	@Override
-	public void create(ArticleVO articleVO) throws Exception {
-		// 게시글 입력 처리.
-		articleDAO.create(articleVO);
-		String[] files = articleVO.getFiles();
-		if (files == null) {
-			return;
-		}
-		
-		// 게시글 첨부파일 입력 처리.
-		for (String fileName : files) {
-			articleFileDAO.addFile(fileName);
-		}
-	}
+    @Inject
+    public ArticleServiceImpl(ArticleDAO articleDAO, ArticleFileDAO articleFileDAO) {
+        this.articleDAO = articleDAO;
+        this.articleFileDAO = articleFileDAO;
+    }
 
-	@Transactional(isolation = Isolation.READ_COMMITTED)
-	@Override
-	public ArticleVO read(Integer articleNo) throws Exception {
-		articleDAO.updateViewCnt(articleNo);
-		return articleDAO.read(articleNo);
-	}
+    @Transactional
+    @Override
+    public void create(ArticleVO articleVO) throws Exception {
+        articleDAO.create(articleVO);
+        String[] files = articleVO.getFiles();
 
-	@Transactional
-	@Override
-	public void update(ArticleVO articleVO) throws Exception {
-		Integer articleNo = articleVO.getArticleNo();
-		String[] files = articleVO.getFiles();
-		articleDAO.update(articleVO);
-		articleFileDAO.deleteFiles(articleNo);
-		if (files == null) {
-			return;
-		}
-		for (String fileName : files) {
-			articleFileDAO.replaceFile(fileName, articleNo);
-		}
-	}
+        if (files == null)
+            return;
+        for (String fileName : files)
+            articleFileDAO.addFile(fileName);
+    }
 
-	// 게시글 삭제 처리.
-	@Transactional
-	@Override
-	public void delete(Integer articleNo) throws Exception {
-		articleFileDAO.deleteFiles(articleNo);
-		articleDAO.delete(articleNo);
-	}
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Override
+    public ArticleVO read(Integer articleNo) throws Exception {
+        articleDAO.updateViewCnt(articleNo);
+        return articleDAO.read(articleNo);
+    }
 
-	@Override
-	public List<ArticleVO> listAll() throws Exception {
-		return articleDAO.listAll();
-	}
+    @Transactional
+    @Override
+    public void update(ArticleVO articleVO) throws Exception {
+        Integer articleNo = articleVO.getArticleNo();
+        String[] files = articleVO.getFiles();
 
-	@Override
-	public List<ArticleVO> listCriteria(Criteria criteria) throws Exception {
-		return articleDAO.listCriteria(criteria);
-	}
+        articleDAO.update(articleVO);
+        articleFileDAO.deleteFiles(articleNo);
 
-	@Override
-	public int countArticles(Criteria criteria) throws Exception {
-		return articleDAO.countArticles(criteria);
-	}
+        if (files == null)
+            return;
+        for (String fileName : files)
+            articleFileDAO.replaceFile(fileName, articleNo);
+    }
 
-	@Override
-	public List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception {
-		return articleDAO.listSearch(searchCriteria);
-	}
+    @Transactional
+    @Override
+    public void delete(Integer articleNo) throws Exception {
+        articleFileDAO.deleteFiles(articleNo);
+        articleDAO.delete(articleNo);
+    }
 
-	@Override
-	public int countSearchedArticles(SearchCriteria searchCriteria) throws Exception {
-		return articleDAO.countSearchedArticles(searchCriteria);
-	}
+    @Override
+    public List<ArticleVO> listAll() throws Exception {
+        return articleDAO.listAll();
+    }
+
+    @Override
+    public List<ArticleVO> listCriteria(Criteria criteria) throws Exception {
+        return articleDAO.listCriteria(criteria);
+    }
+
+    @Override
+    public int countArticles(Criteria criteria) throws Exception {
+        return articleDAO.countArticles(criteria);
+    }
+
+    @Override
+    public List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception {
+        return articleDAO.listSearch(searchCriteria);
+    }
+
+    @Override
+    public int countSearchedArticles(SearchCriteria searchCriteria) throws Exception {
+        return articleDAO.countSearchedArticles(searchCriteria);
+    }
 }

@@ -25,7 +25,7 @@ Handlebars.registerHelper("prettifyDate", function (timeValue) {
     return year + "-" + month + "-" + date + " " + hours + ":" + minutes;
 });
 
-// 댓글 목록 함수
+// 댓글 목록 함수.
 function getReplies(repliesUri) {
     $.getJSON(repliesUri, function (data) {
         printReplyCount(data.pageMaker.totalCount);
@@ -34,20 +34,20 @@ function getReplies(repliesUri) {
     });
 }
 
-// 댓글 갯수 출력 함수
+// 댓글 갯수 출력 함수.
 function printReplyCount(totalCount) {
 
     var replyCount = $(".replyCount");
     var collapsedBox = $(".collapsed-box");
 
-    // 댓글이 없으면
+    // 댓글이 없으면,
     if (totalCount === 0) {
         replyCount.html(" 댓글이 없습니다. 의견을 남겨주세요");
         collapsedBox.find(".btn-box-tool").remove();
         return;
     }
 
-    // 댓글이 존재하면
+    // 댓글이 존재하면,
     replyCount.html(" 댓글목록 (" + totalCount + ")");
     collapsedBox.find(".box-tools").html(
         "<button type='button' class='btn btn-box-tool' data-widget='collapse'>"
@@ -57,7 +57,7 @@ function printReplyCount(totalCount) {
 
 }
 
-// 댓글 목록 출력 함수
+// 댓글 목록 출력 함수.
 function printReplies(replyArr, targetArea, templateObj) {
     var replyTemplate = Handlebars.compile(templateObj.html());
     var html = replyTemplate(replyArr);
@@ -65,7 +65,7 @@ function printReplies(replyArr, targetArea, templateObj) {
     targetArea.html(html);
 }
 
-// 댓글 페이징 출력 함수
+// 댓글 페이징 출력 함수.
 function printReplyPaging(pageMaker, targetArea) {
     var str = "";
     if (pageMaker.prev) {

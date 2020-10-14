@@ -3,7 +3,6 @@ package com.ljh.mvcboard.upload.persistence;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ArticleFileDAOImpl implements ArticleFileDAO{
 	
-	private static final String NAMESPACE = "com.doubles.mvcboard.mappers.upload.ArticleFileMapper";
+	private static final String NAMESPACE = "com.ljh.mvcboard.mappers.upload.ArticleFileMapper";
 
     private final SqlSession sqlSession;
 

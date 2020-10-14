@@ -1,11 +1,10 @@
-// 파일 정보 가공
+// 파일 정보 가공.
 function getFileInfo(fullName) {
 
-    var fileName;   // 화면에 출력할 파일명
-    var imgSrc;     // 썸네일 or 파일아이콘 이미지 파일 요청 URL
-    var getLink;    // 원본파일 요청 URL
-
-    var fileLink;   // 날짜경로를 제외한 나머지 파일명 (UUID_파일명.확장자)
+    var fileName; // 화면에 출력할 파일명.
+    var imgSrc; // 썸네일 or 파일아이콘 이미지 파일 요청 URL.
+    var getLink; // 원본파일 요청 URL.
+    var fileLink; // 날짜경로를 제외한 나머지 파일명 (UUID_파일명.확장자).
 
     // 이미지 파일일 경우
     if (checkImageType(fullName)) {

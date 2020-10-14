@@ -32,7 +32,6 @@ public class ReplyServiceImpl implements ReplyService{
 	@Override
 	public void addReply(ReplyVO replyVO) throws Exception {
 		replyDAO.create(replyVO);
-		System.out.println("getArticleNo : " + replyVO.getArticleNo());
 		articleDAO.updateReplyCnt(replyVO.getArticleNo(), 1); // 댓글 갯수 증가.
 	}
 

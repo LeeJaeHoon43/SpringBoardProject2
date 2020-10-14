@@ -28,7 +28,7 @@ fileDropDiv.on("drop", function (event) {
     uploadFile(formData);
 });
 
-// 파일 업로드 AJAX 통신
+// 파일 업로드 AJAX 통신.
 function uploadFile(formData) {
     $.ajax({
         url: "/article/file/upload",
@@ -61,7 +61,7 @@ function printFiles(data) {
     if (fileInfo.fullName.substr(12, 2) === "s_") {
         // 마지막에 추가된 첨부파일 템플릿 선택자.
         var that = $(".uploadedFileList li").last();
-        // lightbox 속성 추가
+        // lightbox 속성 추가.
         that.find(".mailbox-attachment-name").attr("data-lightbox", "uploadImages");
         // 파일 아이콘에서 이미지 아이콘으로 변경.
         that.find(".fa-paperclip").attr("class", "fa fa-camera");
