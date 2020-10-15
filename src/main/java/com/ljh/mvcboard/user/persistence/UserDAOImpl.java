@@ -48,4 +48,42 @@ public class UserDAOImpl implements UserDAO{
     public UserVO checkUserWithSessionKey(String value) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".checkUserWithSessionKey", value);
     }
+
+    // 
+	@Override
+	public String getUserPw(String userId) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".getUserPw", userId);
+	}
+
+	@Override
+	public void userInfoUpdate(UserVO userVO) throws Exception {
+		sqlSession.update(NAMESPACE + ".userInfoUpdate", userVO);
+	}
+
+	@Override
+	public void userPwUpdate(String userId, String newUserPw) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("userId", userId);
+        paramMap.put("newUserPw", newUserPw);
+        sqlSession.update(NAMESPACE + ".userPwUpdate", paramMap);
+	}
+
+	@Override
+	public void userImgUpdate(String userId, String userImg) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("userId", userId);
+        paramMap.put("userImg", userImg);
+        sqlSession.update(NAMESPACE + ".userImgUpdate", paramMap);
+	}
+
+	@Override
+	public void userDelete(UserVO userVO) throws Exception {
+		sqlSession.delete(NAMESPACE + ".userDelete", userVO);
+	}
+
+	@Override
+	public int passChk(UserVO vo) throws Exception {
+		int result = sqlSession.selectOne(NAMESPACE + ".passChk", vo);
+		return result;
+	}
 }

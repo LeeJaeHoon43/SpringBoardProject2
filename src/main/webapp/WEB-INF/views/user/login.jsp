@@ -14,7 +14,7 @@
             <b>DoubleS</b>&nbsp MVC-BOARD
         </a>
     </div>
-    <!-- /.login-logo -->
+
     <div class="login-box-body">
         <p class="login-box-msg">로그인 페이지</p>
         <form action="${path}/user/loginPost" method="post">
@@ -49,8 +49,7 @@
             <a href="#" class="btn btn-block btn-social btn-google btn-flat">
                 <i class="fa fa-google-plus"></i> 구글 계정으로 로그인
             </a>
-        </div>
-        <a href="#">비밀번호 찾기</a><br>
+        </div>	
         <a href="${path}/user/register" class="text-center">회원가입</a>
     </div>
 </div>

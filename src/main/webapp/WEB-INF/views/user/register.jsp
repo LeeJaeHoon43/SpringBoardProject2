@@ -42,7 +42,7 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox"> 약관에 <a href="#">동의</a>
+                            <input type="checkbox"> 약관에 동의
                         </label>
                     </div>
                 </div>

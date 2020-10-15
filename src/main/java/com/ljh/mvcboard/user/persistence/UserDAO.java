@@ -17,4 +17,21 @@ public interface UserDAO {
 	// 세션키 검증.
 	public UserVO checkUserWithSessionKey(String value) throws Exception;
 	
+	// 회원비밀번호.
+	public String getUserPw(String userId) throws Exception;
+
+    // 회원정보 수정처리.
+    public void userInfoUpdate(UserVO userVO) throws Exception;
+
+    // 회원 비밀번호 수정.
+    public void userPwUpdate(String userId, String newUserPw) throws Exception;
+
+    // 회원 프로필 사진파일 수정.
+    public void userImgUpdate(String userId, String userImg) throws Exception;
+    
+    // 비밀번호 체크.
+    public int passChk(UserVO vo) throws Exception;
+    
+    // 회원 탈퇴.
+ 	public void userDelete(UserVO userVO) throws Exception;
 }
